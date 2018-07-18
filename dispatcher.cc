@@ -13,7 +13,7 @@ class Taskobj {
 
         void operator()(int a){
             cout << "the value set " << val_ << endl;
-            cout << "the value send " << val << endl;
+            cout << "the value send " << a << endl;
         }
 };
 
@@ -43,7 +43,8 @@ void
 Dispatcher::dispatchtask(){
 
     queue<function<void(int)> > localq;
-       {
+
+    {
         lock_guard<mutex> lck(mtx_);
         localq.swap(taskq_);
     }
@@ -58,8 +59,22 @@ Dispatcher::dispatchtask(){
     }
 }
 
+void taskg(int a) {
+    cout << "global task " << a << endl;
+}
 
-int main(){
+class Callback {
+    int val_;
+    public:
+        Callback(int val = 0):val_(val){};
+        void my_func(int a) {
+            cout << "Callback done  set " << val_ << endl;
+            cout << " value sent " << a;
+        }
+};
+
+int
+main(){
 
     // add tasks
     Taskobj tobj(5);
@@ -67,6 +82,16 @@ int main(){
     Dispatcher dsp;
 
     dsp.addtask(tobj);
+
+    auto tobj2 = [](int a){ cout << "value sent lmda " << a << endl;};
+    dsp.addtask(tobj2);
+
+    dsp.addtask(taskg);
+
+    Callback cb(45);
+
+    dsp.addtask(bind(&Callback::my_func, &cb, placeholders::_1));
+
     dsp.dispatchtask();
 }
 
