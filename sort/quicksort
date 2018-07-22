@@ -1,0 +1,19 @@
+
+int partition(vector<int>& arr, int lft, int rt) {
+  int pi = choosePivot();
+  int pivot = arr[pi];
+  while(lft < rt) {
+    while(a[lft] <= pivot) lft++;
+    while(a[rt] > pivot) rt++;
+    if(lft < rt) swap(arr[lft], arr[rt]);
+  
+  }
+  swap(arr[rt],arr[pi]);
+  return pi;
+}
+
+void quicksort(vector<int> &arr, int lft, int rt){
+  int pi = partition(arr, lft, rt);
+  quicksort(arr, lft, pi-1);
+  quicksort(arr, pi+1, rt);
+}
