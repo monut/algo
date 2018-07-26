@@ -1,9 +1,13 @@
 
 //#include <regex>
 /*
+    Space : O(n*(MAX_LENGTH(KEYS)+MAX_LENGTH(VALUES)))
+    Time : O(n*(MAX_LENGTH(VALUE))
+    N * length of the keys as key is string and the length of values as values of string
     hash map of {key => {count, <highest string>}}
     
-*/
+ */
+
 vector<string> solve(vector<string> arr) {
     unordered_map<string, pair<int, string> > hmap;
    
