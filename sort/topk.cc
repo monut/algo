@@ -1,42 +1,57 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
-
 #include "myutils.h"
-
-using namespace std;
 /*
- * Complete the function below.
+    insert in a min hip the K element
+    and in a set
+    loop through the elements 
+    if top element is less than the new element 
+    and is not already in the set then pop the top element 
+    and insert it else continue.
  */
-//find top K 
-
-vector <int> topk(vector <int> arr, int k) {
-
-    vector<int> res;
-    auto comp = [](int a, int b){return a > b;};
+vector <int> topK(vector <int> arr, int k) {
+    
+    if(arr.size() <= k)
+        return arr;
+    unordered_set<int> myk;
+    auto comp = [](int& a, int& b){return a > b;};
     priority_queue<int, vector<int>, decltype(comp)> pq(comp);
-    int arr_sz = arr.size();
-    auto cnt = min(k, arr_sz);
-    for(auto i = 0; i < cnt; i++) {
-        pq.push(arr[i]); 
+    
+    int i = 0;
+    while(i < k){
+        if(myk.find(arr[i]) == myk.end()){
+            myk.insert(arr[i]);
+            pq.push(arr[i]);
+        }
+        i++;
     }
-
-    if(arr.size() > k) {
-        for(auto i = k; i < (arr.size()) ; i++) {
-            auto elem = pq.top();
-            if(elem < arr[i]) {
-                pq.pop();
+    
+    while(i < arr.size()){
+        if(myk.find(arr[i]) == myk.end() ){
+            if(pq.size() < k){
                 pq.push(arr[i]);
+                myk.insert(arr[i]);
+            } else {
+            
+                if(pq.top() < arr[i]){
+                    myk.erase(pq.top());
+                    pq.pop();
+                    pq.push(arr[i]);
+                    myk.insert(arr[i]);
+                    
+                }
             }
         }
-    } 
+        i++;
+    }
+    
+    vector<int> res;
     while(!pq.empty()){
         res.push_back(pq.top());
         pq.pop();
     }
-    return res;    
+    return res;
 }
+
+
 
 int main()
 {
