@@ -1,0 +1,64 @@
+#include <algorithm> // sort
+
+vector<vector<int>> getMergedIntervals(vector<vector<int>> inputArray) {
+    
+    sort(inputArray.begin(), inputArray.end(), [](const vector<int>& v1, const vector<int>& v2)-> bool{
+        return v1[0] < v2[0];
+    });
+    
+    for(auto val : inputArray){
+      cout << val[0] << endl;   
+    }
+    vector<vector<int> > res;
+    
+    res.emplace_back(vector<int>{inputArray[0][0], inputArray[0][1]});
+    int j = 0;
+    for(int i=1; i < inputArray.size(); i++){
+        if(res[j][1] >= inputArray[i][0]){
+            // merge interval;
+            res[j][1] = inputArray[i][1];
+            
+        } else {
+            res.emplace_back(vector<int>{inputArray[i][0], inputArray[i][1]});
+            j++;
+        }
+    }
+    return res;
+}
+
+
+vector<vector<int>> getMergedIntervals2(vector<vector<int>> inputArray) {
+    /*
+     * Write your code here.
+     */
+    map<int, int> hmap;
+    // this will give sorted or we can also use a vector and sort
+    for(auto i = 0; i < inputArray.size(); i++){
+        hmap[inputArray[i][0]] = inputArray[i][1]; 
+    }
+    vector< vector<int> > res(inputArray.size(), vector<int>(2,0));
+    // vector< vector<int> > res;
+    auto it = hmap.begin();
+    pair<int, int>  cur = {it->first, it->second};
+    
+    // iterate in sorted key order
+    // use vector of pair<>
+    // what if there are only two ranges
+    auto i = 0;
+    while(it != hmap.end()){
+        if(cur.second >= it->first){
+            //merge overlapping
+            res[i][0] = cur.first;
+            res[i][1] = it->second;
+        } else {
+            i++;
+            res[i][0] = it->first;
+            res[i][1] = it->second;
+        }
+        cur = {res[i][0], res[i][1]};
+        it++;
+    }
+    res.shrink_to_fit();
+    return res;
+}
+
