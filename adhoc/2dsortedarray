@@ -1,0 +1,21 @@
+/*
+ * start from top right if x < elem then move right else move down 
+  O(N) 
+  Kth smallest element in a row-wise and column-wise sorted 2D array
+ */
+
+string isPresent(vector<vector<int>> arr, int x) {
+    int sz = arr.size();
+    int r = 0;
+    int c = arr[0].size() - 1;
+    while(r < sz && c >= 0){
+        if(x == arr[r][c])
+            return "present";
+        if(x < arr[r][c]){
+            c--;
+        } else if(x > arr[r][c]){
+            r++;
+        } 
+    }
+    return "not present";
+}
