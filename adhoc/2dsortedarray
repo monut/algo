@@ -2,6 +2,13 @@
  * start from top right if x < elem then move right else move down 
   O(N) 
   Kth smallest element in a row-wise and column-wise sorted 2D array
+  store first row in a min heap arlong with r and c
+  loop(K times){
+    get min element from pq
+    insert the r+1 but same column 
+   
+  }
+   return the last element extracted 
  */
 
 string isPresent(vector<vector<int>> arr, int x) {
