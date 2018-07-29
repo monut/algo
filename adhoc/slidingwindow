@@ -1,27 +1,67 @@
 /*
  sliding window maximum 
- have a deque
- first W elements. If back elemnent is less then pop the index and insert the index for the new one
- loop through rest of the elements.
-  and if  index at the front is more than K away from current index then remove it
+ insert in back of queue
+ For the first "w" elements where "w" is window size
+    while(element at the back of Q is < new element) keep pooping 
+    add the new element
+ For rest of the elements 
+    if(index of front element is beyond window <= i-w) keep on poping from front.
+    while(element at the back of Q is < new element) keep pooping 
+    add the new element
+    element at the front of the queue is the max element
+    
  
+  number of elements in resultant array  arr.size() - w + 1
  */
  
- vector<int> sliding_window_max(vector<int> arr, int w) {
+ // Example program
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <deque>
+using namespace std;
+
+vector<int> sliding_window_max(vector<int> arr, int w) {
     int sz = arr.size();
     
     deque<int> dq;
     int i = 0;
     for(; i < w; i++){
-      if(arr[dq.back()] < arr[i]){
+      // any element in the window which are less than new element
+      // should be removed
+      while(!dq.empty() && arr[dq.back()] < arr[i]){
         dq.pop_back();
       }
-      dp.push_back[i]; 
+      dq.push_back(i); 
     }
     
-    for(; i < 
+    // front of the queue is the answer 
+    vector<int> res; 
+    for(; i < sz; i++){
+       // if the front index has left the window
+       // pop it and preserve it
+       while(!dq.empty() && dq.front() <= i-w){
+        
+         dq.pop_front();
+       }
+       
+       while(!dq.empty() && arr[dq.back()] < arr[i]){
+         dq.pop_back();
+       }
+       dq.push_back(i); 
+       res.push_back(arr[dq.front()]); 
+    }
+    return res;
  }
  
  int main() {
- 
+   vector<int> res;
+   vector<int> arr = {4,3,5,2,8,9};
+   res = sliding_window_max(arr, 3);
+   cout << endl;
+   for(auto val : res){
+       cout << val << " ";
+   }
+   cout << endl;
  }
