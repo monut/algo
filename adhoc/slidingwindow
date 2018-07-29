@@ -12,6 +12,7 @@
     
  
   number of elements in resultant array  arr.size() - w + 1
+  TODO : max queue class with concurrency
  */
  
  // Example program
@@ -38,6 +39,8 @@ vector<int> sliding_window_max(vector<int> arr, int w) {
     
     // front of the queue is the answer 
     vector<int> res; 
+    res.push_back(arr[dq.front()]);
+    
     for(; i < sz; i++){
        // if the front index has left the window
        // pop it and preserve it
