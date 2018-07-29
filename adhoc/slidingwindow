@@ -1,4 +1,4 @@
-/*
+v/*
  sliding window maximum 
  insert in back of queue
  For the first "w" elements where "w" is window size
@@ -13,6 +13,12 @@
  
   number of elements in resultant array  arr.size() - w + 1
   TODO : max queue class with concurrency
+     queue and dqmax
+    enque : insert q.back() . remove from dqmax if back is less than new element
+      insert the new element
+    deque :
+       remove from front of q.pop()
+       if(dqmax[front] == q.front()] then pop from front of dqmax
  */
  
  // Example program
