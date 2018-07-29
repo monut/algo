@@ -1,0 +1,27 @@
+/*
+ sliding window maximum 
+ have a deque
+ first W elements. If back elemnent is less then pop the index and insert the index for the new one
+ loop through rest of the elements.
+  and if  index at the front is more than K away from current index then remove it
+ 
+ */
+ 
+ vector<int> sliding_window_max(vector<int> arr, int w) {
+    int sz = arr.size();
+    
+    deque<int> dq;
+    int i = 0;
+    for(; i < w; i++){
+      if(arr[dq.back()] < arr[i]){
+        dq.pop_back();
+      }
+      dp.push_back[i]; 
+    }
+    
+    for(; i < 
+ }
+ 
+ int main() {
+ 
+ }
