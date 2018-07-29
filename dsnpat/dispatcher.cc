@@ -3,6 +3,10 @@
 #include <mutex>
 #include <functional>
 
+/*
+ * Provide a mechanism to callback with variable number of 
+ * paramters.
+ */
 using namespace std;
 
 class Taskobj {
@@ -90,7 +94,8 @@ main(){
     dsp.addtask(taskg);
     
     Callback cb(45);
-
+    
+    // ?? bind mutluple values
     dsp.addtask(bind(&Callback::my_func, &cb, placeholders::_1));
     
     dsp.dispatchtask();
