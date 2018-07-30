@@ -30,8 +30,14 @@ void dfs(unordered_map<char,vector<char> >& g) {
     }    
 }
 
-void topological_sort(unordered_map<char,vector<char> >& g){
+string topological_sort(unordered_map<char,vector<char> >& g){
     dfs(g);
+    // reverse the post order 
+    string pt;
+    for(auto c : path){
+        pt = c + pt;
+    }
+    retunr pt;
 }
 
 string find_order(vector <string> words) {
@@ -57,10 +63,7 @@ string find_order(vector <string> words) {
             }
         }
     }
-    topological_sort(g);
-    string pt;
-    for(auto c : path){
-        pt = c + pt;
-    }
+    string pt = topological_sort(g);
+    
     return pt;
 }
