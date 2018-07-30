@@ -1,0 +1,66 @@
+/*
+    Then in a loop compare the adjacent words to create a dependency graph
+    Can conclusively establish dependency when characters at same position differ 
+    alien dicitionaty 
+    caa aaa aab
+ */
+
+// by default the values for bool is false
+unordered_map<char, bool> visited;
+vector<char> path;
+
+void explore(char c, unordered_map<char,vector<char> >& g){
+    visited[c] = true;
+    
+    auto edgs = g[c];
+    for(auto w : edgs){
+        if(visited[w] == false){
+            explore(w, g);
+        }
+    }
+    // post order
+    path.push_back(c);
+}
+
+void dfs(unordered_map<char,vector<char> >& g) {
+    for( auto vert : g){
+        if(visited[vert.first] == false){
+            explore(vert.first,g);
+        }
+    }    
+}
+
+void topological_sort(unordered_map<char,vector<char> >& g){
+    dfs(g);
+}
+
+string find_order(vector <string> words) {
+    int n = words.size();
+    
+    //dependency graph 
+    unordered_map<char,vector<char> > g;
+    
+        //initialize graph by mapping the unique letters in all the words
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < words[i].length(); j++){
+            g[words[i][j]] = vector<char>(0);
+        }
+    }
+
+    for(int i = 0; i < n-1; i++){
+        int min_len = min(words[i].size(), words[i+1].size());
+        for(int j = 0; j < min_len; j++){
+            // if the chars don't match then we can estabalish dependency
+            if(words[i][j] != words[i+1][j]){
+                g[words[i][j]].push_back(words[i+1][j]);
+                break; // cannot go beyond that
+            }
+        }
+    }
+    topological_sort(g);
+    string pt;
+    for(auto c : path){
+        pt = c + pt;
+    }
+    return pt;
+}
