@@ -1,0 +1,53 @@
+
+/*
+ * Find the list of connected componets by doing DFS
+ * and increment the connected component count in DFS
+ * and assigned in Explore
+ */
+unordered_map<int, bool> visited;
+unordered_map<int, int> conn_;
+int con_comp = 0;
+
+
+
+void print_conn_comp(){
+    for(auto val : conn_){
+        cout << "Node " << val.first ;
+        cout << "Commponent " << val.second << endl;
+    }
+}
+void explore(vector<string>& zombies, int z_num){
+    visited[z_num] = true;
+    // setting the componnet if needed 
+    conn_[z_num] = con_comp;
+    string adj = zombies[z_num];
+    
+    for(int i = 0; i < adj.size(); i++){
+        if( adj[i]== '1' && !visited[i]){
+            explore(zombies, i);
+        }
+    }
+}
+
+int DFS(vector<string> zombies){
+    int sz = zombies.size();
+    
+    for(int i = 0; i < sz; i++){
+        if(!visited[i]){
+            explore(zombies, i);
+            con_comp++;   
+        }
+      
+    }
+    print_conn_comp();
+    
+    return con_comp;
+}
+
+
+int 
+zombieCluster(vector<string> zombies) {
+    if(zombies.size() == 0)
+        return 0;
+    return DFS(zombies);
+}
