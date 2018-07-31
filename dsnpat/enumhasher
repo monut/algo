@@ -1,0 +1,46 @@
+#include <cstdio>
+#include <unordered_map>
+#include <map>
+#include <type_traits>
+
+using namespace std;
+
+enum class EventType {
+    LOCAL_READ_ERROR,
+    LOCAL_WRITE_ERROR,
+    REMOTE_IO_ERROR,
+    NETWORk_ERROR,
+
+};
+
+
+template<class T, bool>
+struct hasher {
+    inline size_t operator() (const T& elem) {
+        return std::hash<T>()(elem);
+    }
+};
+
+template<class T>
+struct hasher<T, true> {
+    inline size_t operator() (const T& elem) {
+        typedef typename underlying_type<T>::type enumType;
+        return std::hash<enumType>()(static_cast<enumType>(elem));
+    }
+};
+
+template<class T>
+struct StateHash {
+    inline size_t operator()(const T& elem) const {
+        return hasher<T, is_enum<T>::value>()(elem);
+    }
+};
+
+
+unordered_map<EventType, string, StateHash<EventType> > st {
+    {EventType::LOCAL_READ_ERROR,"LOCAL_READ_ERROR"},
+    {EventType::LOCAL_WRITE_ERROR,"LOCAL_WRITE_ERROR"},
+    {EventType::REMOTE_IO_ERROR,"REMOTE_IO_ERRORi"},
+    {EventType::NETWORk_ERROR,"NETWORK_ERROR"},
+
+};
