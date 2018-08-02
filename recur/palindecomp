@@ -1,0 +1,51 @@
+/*
+ * start from position zero and for each position go to the end
+ * if the sunstring from pos to i is a plaindrome.
+ * add only if we reach the end for the string.
+ */
+
+bool is_palindrome(string s) {
+    auto l = 0;
+    auto r = s.length() - 1;
+   
+    while(l < r){
+        if(s[l++] != s[r--]) {
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void
+helper(vector<string>& res, string s, string exp, int pos){
+    if(pos == s.length()){
+        // trim the last "|"
+        string tmp = exp.substr(0, exp.length()-1);
+        res.push_back(tmp);
+        return;
+    }
+    
+    for(int i = pos; i < s.length(); i++){
+        string str = s.substr(pos,i - pos + 1);
+        // need to continue only if str is palindrome else
+        // terminate and move to next position
+        if(is_palindrome(str)){
+            helper(res, s, exp+str+"|", i+1);
+        } // else keep on
+    }
+    
+}
+
+
+
+
+vector <string> generate_palindromic_decompositions(string s) {
+    
+    vector<string> res;
+    string exp;
+    helper(res, s,exp, 0);
+    return res;
+    
+}
