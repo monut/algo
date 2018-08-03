@@ -36,22 +36,28 @@ Node* createTree(string data) {
 }
 
 
-bool
-isBST(Node *root) {
-    if(root == nullptr){
+/*
+ *  An empty tree is BST. Do in-order traversal and keep a previous
+ pointer. Compare on the way up the stack if the prevoius value is < 
+  current node val. Return false if not.
+ */
+
+bool helper(Node *root, Node* &prev){
+    if(root == nullptr)
         return true;
-    }
+    if(!helper(root->left, prev)) return false;
     
-    // left or right could be null check for it
-    if(root->left != nullptr && root->left->val >= root->val) {
-        return flase;
-    }
-    if(root->right != nullptr && root->right->val <= root->val) {
-        return flase;
-    }
-    return isBST(root->left) && isBST(root->right);
+    if(prev != nullptr && prev->val >= root->val) return false;
+    prev = root; //prev will be set at left most node
+    
+    return (helper(root->right, prev));
+        
 }
 
+bool isBST(Node *root){
+    Node *prev = nullptr;
+    return helper(root, prev);   
+}
 
 int main() {
     
