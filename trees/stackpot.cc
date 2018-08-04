@@ -1,7 +1,8 @@
 #include "myutils.h"
 
 /*
-pwalk from root and push left nodes. reach end the left most node.  If there is right node of that 
+pwalk from root and push left nodes into stack till reach the left most node.  If there is right node of the
+top of stack element then 
 , set pwalk to right and continue pushing the node. If we reach a leaf node (no left or right child) 
 pop the stack print the value. Compare with top stack and if the right node of top of stack is same
 then pop the top of stack. Keep on doing til this holds.
