@@ -1,6 +1,12 @@
 /*
- * Convert a BST into a Circular Doubly Linked List
- * Nodes to be 
+
+Post order traversl. Preseve the ends of the lists being stiched. (l1end = l1->left  && l2end = l2->left) 
+stich list from left traversal to root, Then stich the resuting list with one got my right traversal.
+Before stiching set roots  node's left and right pointer point to self. Circular list so
+first node left points to last node. drawing trees/dll along with pointers helps. handle root == null 
+condition in linking 2 list as well in recursive function.
+Post order : action can be taken after both left and right of the tree have been visited
+
  * smple input 
  * 21 
  * 335 -77 -81 # # 19 # # 547 505 350 # # # 807 692 # # 816 # #
