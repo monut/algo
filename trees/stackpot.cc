@@ -1,9 +1,13 @@
 #include "myutils.h"
 
 /*
+pwalk from root and push left nodes. reach end the left most node.  If there is right node of that 
+, set pwalk to right and continue pushing the node. If we reach a leaf node (no left or right child) 
+pop the stack print the value. Compare with top stack and if the right node of top of stack is same
+then pop the top of stack. Keep on doing til this holds.
 27
 222 29 76 66 159 81 192 235 249 147 # # 14 # # # # 40 # # # # # 195 # # #
-# is a node
+# is a null  node
  */
 using namespace std;
 
@@ -42,40 +46,7 @@ void printInorder(Node* n) {
     cout << n->val << " ";
     printInorder(n->right);
 }
-/*
- * Complete the function below.
- */
-/*
-void postorderTraversal(Node* root) {
-    stack<Node *> st;
-    Node *pwalk = root;
-    while(!st.empty() || pwalk != nullptr) {
 
-        if(pwalk != nullptr) {
-            st.push(pwalk);
-            pwalk = pwalk->left;
-        } else {
-            Node *tmp = nullptr;
-            tmp = st.top()->right;
-            if(tmp == nullptr){
-                // reached the leaf so print the val
-                tmp = st.top();
-                st.pop();
-                cout << tmp->val << " ";
-                while(!st.empty() && st.top()->right == tmp){
-                    tmp = st.top();
-                    cout << tmp->val << " ";
-                    st.pop();
-                } 
-            } else { // else need to push to stack
-                pwalk = tmp; 
-            } 
-        }
-    }
-    cout << endl;
-}
-
-*/
 
 void postorderTraversal(Node* root) {
     Node *pwalk = root;
