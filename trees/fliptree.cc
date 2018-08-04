@@ -81,7 +81,21 @@ int fliptree(Node* node) {
 
     printInorder(root);
 }
-
+// recursive solution
+void fliptreerecur(Node *nd, Node* &root){
+    if(!nd) return;
+    
+    fliptreerecur(nd->left, root);
+    if(root == nullptr){
+        root = nd;
+    } else {
+        nd->left->left = nd->right;
+        nd->left->right = nd;
+        nd->right = nullptr;
+        nd->left = nullptr;
+    }
+   return; 
+}
 
 int main() {
     ofstream fout(getenv("OUTPUT_PATH"));
