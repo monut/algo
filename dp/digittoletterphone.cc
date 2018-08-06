@@ -9,8 +9,8 @@ Given a 7 digit number find all possible leter combinatns based on digit to lett
 using namespace std;
 
 
-unordered_map <int, string> keypad = { {1, ""}, {2, "abc"}, {2, "def"}, {3,"ghi"}, {4,"jkl"}, {5,"mno"},
-  {6, "pqrs"}, {7, "tuv"}, {8, "wxyz"}};
+unordered_map <int, string> keypad = { {1, ""}, {2, "abc"}, {3, "def"}, {4,"ghi"}, {5,"jkl"}, {6,"mno"},
+  {7, "pqrs"}, {8, "tuv"}, {9, "wxyz"}};
  
 unordered_set<string> dict = {"dad", "bad","cattle"}; 
 
