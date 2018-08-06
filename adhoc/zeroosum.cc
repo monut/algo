@@ -10,6 +10,7 @@ sumZero(vector <int> intArr) {
     int sum = 0; 
     int i = 0;
     
+    pair<int, int> max = {0, 0};
     vector< vector<int> > res;
     for(auto val : intArr){
         sum +=val;
@@ -18,6 +19,9 @@ sumZero(vector <int> intArr) {
             vector<int> v;
             copy(intArr.begin(), intArr.begin() + i +1, back_inserter(v));
             res.push_back(v);
+            if((max.second - max.first) < i ){
+                max = {0, i};
+            }
         }
         
         auto it = mp.find(sum);
@@ -28,6 +32,10 @@ sumZero(vector <int> intArr) {
             // begin + idx as idx started from zero. So works out 
             copy(intArr.begin()+idx,intArr.begin()+i+1, back_inserter(v));
             res.push_back(v);
+            if((max.second - max.first) < i - idx){
+                max = {idx, i};
+            }
+            
         } else {
             mp[sum] = i;
         }
@@ -41,5 +49,6 @@ sumZero(vector <int> intArr) {
         }
         cout << endl;
     }
+    cout << "max_indexes from " << max.first << " to " << max.second;
     return {};
 }
