@@ -1,0 +1,84 @@
+/*  Given a text file  find the position that a word occurs at. N - number of words and
+ * L is length of a word
+ * hash table the space: O(N*L + space to store indexex) and search O(Llog(N)) becasuse map is 
+ * implemented as a tree.
+  * Trie  it is O(L) to search
+ *
+ */
+ 
+ /*
+    inverted index/reverse index stores content to location in a file. 
+    uses : fast full text searches, pharse searches
+    inverted index :  mapping to word to documents
+    full inverted index : mapping words to location in the file
+ */
+
+struct TrieNode {
+    unordered_map<char, TrieNode *> children;
+    vector<int> idxs;
+    bool isword;
+    TrieNode():isword(false){};
+};
+
+
+void insertTrie(TrieNode *root, string& wrd, int idx){
+    
+    TrieNode *nd = root;
+    for(auto c : wrd){
+        auto it = nd->children.find(c);
+        if(it == nd->children.end()) {
+            nd->children[c] = new TrieNode(); 
+        }
+        nd = nd->children[c];
+    }
+    
+    nd->isword = true;
+    nd->idxs.push_back(idx);
+}
+
+// return the root 
+TrieNode *buildTrie(vector<string>& strs){
+    TrieNode *root = new TrieNode();
+    int idx = 0;
+    for(auto str : strs){
+        insertTrie(root, str, idx);
+        idx++;
+    }
+    return root;
+}
+vector<int> dfs(TrieNode *root, const string& word){
+    TrieNode *nd = root;
+    for(auto c : word){
+        auto it = nd->children.find(c);
+        if(it != nd->children.end()){
+            nd = nd->children[c];
+        } else {
+            break;
+        }
+    }
+    if(nd->isword){
+        return nd->idxs;
+    }
+    return {};
+}
+vector<vector<int>> find_positions_of_words_in_text(string text, vector<string> words) {
+    vector<string> txt;
+    istringstream ins(text);
+    while(!ins.eof()) {
+        string val;
+        ins >> val;
+        txt.push_back(val); // may be directly insert in the trie
+    }
+    
+    TrieNode *root = buildTrie(txt);
+    
+    vector< vector<int> > res;
+    
+    
+    
+    for(auto wrd : words){
+        res.push_back(dfs(root, wrd));
+    }
+    return res;
+}
+
