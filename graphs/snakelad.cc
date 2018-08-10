@@ -1,3 +1,4 @@
+/*
 There are N cells in the board. if Moves[i] != -1  points to position of ladder 
 or snake.
 - Do BFS from the first cell 
@@ -10,7 +11,7 @@ int getmindice(int N, vector<int>& lad){
     
     queue<pair<int, int> > q;
     q.emplace(0,0); // first cell and dist 0;
-    
+    visited[0] = true;
     while(!q.empty()){
         auto val = q.front();
         int c = val.first; 
