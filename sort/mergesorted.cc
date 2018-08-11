@@ -145,7 +145,8 @@ mergeArrays(vector <vector<int> > arr) {
         res.push_back(val.first);
         int nxt_q = val.second.first;
         int nxt_q_idx = val.second.second + 1;
-        if(arr[nxt_q].size() <= nxt_q_idx) {
+        if( nxt_q_idx >= arr[nxt_q].size()) {
+            // skip becasue index is more than than elements in array
             continue;
         } else {
             pq.emplace(arr[nxt_q][nxt_q_idx], pair<int, int>(nxt_q, nxt_q_idx));
