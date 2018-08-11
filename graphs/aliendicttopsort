@@ -1,69 +1,115 @@
-/*
-    Then in a loop compare the adjacent words to create a dependency graph
-    Can conclusively establish dependency when characters at same position differ 
-    alien dicitionaty 
-    caa aaa aab
+/*  
+compare adjacent words from left upto minimum of the 2 lengths. 
+The first character which doesn't match gives first_word letter to 
+second_word letter. Do topological sort  by doing dfs /explore. keep 
+the post order or push back to vector at pos_order( before returing 
+from explore). Reverse before printing.
+In a loop compare the adjacent words to create a dependency graph
+Can conclusively establish dependency when characters at same position differ 
  */
 
 // by default the values for bool is false
 unordered_map<char, bool> visited;
-vector<char> path;
+string path;
 
-void explore(char c, unordered_map<char,vector<char> >& g){
+
+void explore(char c, unordered_map<char, vector<char> >& g){
     visited[c] = true;
-    
-    auto edgs = g[c];
-    for(auto w : edgs){
-        if(visited[w] == false){
-            explore(w, g);
+    auto lst = g[c];
+    for(auto ch : lst){
+        if(visited.find(ch) == visited.end()){
+            explore(ch, g);
         }
     }
-    // post order
-    path.push_back(c);
+    path =  c + path ;
 }
 
-void dfs(unordered_map<char,vector<char> >& g) {
-    for( auto vert : g){
-        if(visited[vert.first] == false){
-            explore(vert.first,g);
-        }
-    }    
-}
-
-string topological_sort(unordered_map<char,vector<char> >& g){
-    dfs(g);
-    // reverse the post order 
-    string pt;
-    for(auto c : path){
-        pt = c + pt;
+void DFS(unordered_map<char, vector<char> >& g){
+    for(auto elem : g){
+        if(visited.find(elem.first) == visited.end())
+            explore(elem.first,g);
     }
-    retunr pt;
+}
+
+void toplogical_sort(unordered_map<char, vector<char> >& g){
+    DFS(g);
 }
 
 string find_order(vector <string> words) {
-    int n = words.size();
-    
-    //dependency graph 
-    unordered_map<char,vector<char> > g;
-    
-        //initialize graph by mapping the unique letters in all the words
-    for(int i = 0; i < n; i++){
+    // 
+    unordered_map<char, vector<char> > g;
+    // need initialize the vector in the map
+    for(int i = 0; i < words.size(); i++){
         for(int j = 0; j < words[i].length(); j++){
             g[words[i][j]] = vector<char>(0);
         }
     }
 
-    for(int i = 0; i < n-1; i++){
-        int min_len = min(words[i].size(), words[i+1].size());
-        for(int j = 0; j < min_len; j++){
-            // if the chars don't match then we can estabalish dependency
+    for(int i = 0; i < words.size() - 1; i++){
+        int sz = min(words[i].size(), words[i+1].size());
+        for(int j = 0; j < sz; j++){
             if(words[i][j] != words[i+1][j]){
                 g[words[i][j]].push_back(words[i+1][j]);
-                break; // cannot go beyond that
+                break;
             }
         }
     }
-    string pt = topological_sort(g);
-    
-    return pt;
+    toplogical_sort(g);
+    cout << " Path " << path;
+    return path;
 }
+
+#if 0
+void dfs(char from, unordered_map<char, vector<char> >& g, string& s, unordered_set<char>& visited){
+    visited.insert(from);
+    for(auto it = g[from].begin(); it != g[from].end(); it++){
+        if(visited.find(*it) == visited.end()){
+            dfs(*it, g, s, visited);
+        }
+    }
+    s = from + s;
+   
+}
+
+string 
+topological_sort(unordered_map<char, vector<char> >& g){
+    string res;
+    // to keep track of nodes/letter visited 
+    unordered_set<char> visited;
+    for(auto it = g.begin(); it != g.end(); it++){
+        // if node not visited then visit the node and it's neighbour
+        if(visited.find(it->first) == visited.end()){
+            dfs(it->first, g, res, visited);
+        }
+    }
+    return res;
+}
+string find_order(vector <string> words) {
+    int n = words.size();
+    unordered_map<char, vector<char>> g;
+    
+    //initialize graph by mapping the unique letters in all the words
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < words[i].length(); j++){
+            g[words[i][j]] = vector<char>(0);
+        }
+    }
+    // compare adjacent words and add mimatched letter to the adjaceny list 
+    // of the graph for the letter {aaa, aab} then a ---> b 
+    for(int i = 0; i < n -1 ; i++){
+        int min_length = min(words[i].length(), words[i+1].length());
+        
+        for(int j = 0; j < min_length; j++){
+            if(words[i][j] != words[i+1][j]){
+                g[words[i][j]].push_back(words[i+1][j]);
+                break;
+            }
+        }
+    }
+    
+    // Graph is done
+    // do topological sorting to have 
+    return topological_sort(g);
+
+}
+#endif
