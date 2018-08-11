@@ -4,6 +4,40 @@
  * and increment the connected component count in DFS
  * and assigned in Explore
  */
+ 
+ 
+ 
+ vector<bool> visited;
+
+void explore(vector<string> zb, int zn){
+    visited[zn] = true;
+    auto zs =  zb[zn];
+    
+    for(int j = 0; j < zs.size(); j++){
+        cout << " J " << j << endl;
+        if(j != zn && zs[j] == '1' && !visited[j]){
+            explore(zb, j);
+        }
+    }
+    
+}
+
+int 
+zombieCluster(vector<string> zombies) {
+    int sz = zombies.size();
+    
+    visited.assign(sz,false);
+    int con = 0;
+    for(int i = 0; i < sz; i++){
+        if(!visited[i]){
+            explore(zombies, i);
+            con++;
+        }
+    }
+    return con;
+}
+
+#if 0 
 unordered_map<int, bool> visited;
 unordered_map<int, int> conn_;
 int con_comp = 0;
@@ -51,3 +85,13 @@ zombieCluster(vector<string> zombies) {
         return 0;
     return DFS(zombies);
 }
+
+/*
+4
+1100
+1110
+0110
+0001
+output = 2
+*/
+#endif
