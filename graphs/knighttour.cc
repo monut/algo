@@ -1,12 +1,61 @@
 #include "myutils.h"
 
+/*
+    Do BFS to find shortest path from start to end. Make a grid. queue the 
+    start row and start col. Set it to zero. everything else is set to -1.
+    Do BFS. Try out each of the eight possible moves and update cell with the 
+    distance. Before procssing next entry examine if its is end cell. If yes break.
+    Don't forget to pop the item which is being examined. Also valis check return
+    false if row >= num_rows || col >= num_cols as there are zero indexed rows and cols.
+ */
+
+bool isvalid(int nr, int nc, int rows, int cols){
+    if(nr < 0 || nr >= rows || nc < 0 || nc >= cols)
+        return false;
+    return true;    
+}
+
+int find_minimum_number_of_moves(int rows, int cols, int start_row, int start_col,int end_row, int end_col) {
+    vector<int> r_mv = {2, 2, -2, -2, 1 , -1 , 1, -1};
+      vector<int> c_mv = {1, -1, 1, -1, 2, 2, -2, -2};
+    
+    vector<vector<int> > chess(rows, vector<int>(cols, -1));
+    
+    queue<pair<int, int> > q;
+    q.emplace(start_row, start_col);
+    chess[start_row][start_col] = 0;
+    while(!q.empty()){
+        auto cell = q.front(); q.pop();
+        if(cell.first == end_row && cell.second == end_col)
+            break;
+        for(int i = 0; i < 8; i++){
+            int nr = cell.first + r_mv[i];
+            int nc = cell.second + c_mv[i];
+            // break out if reached the end spot
+            
+            if(isvalid(nr, nc, rows, cols) && chess[nr][nc] == -1){
+                // not visited and valid move
+                chess[nr][nc] = chess[cell.first][cell.second] + 1;
+                q.emplace(nr,nc);
+            }
+        }
+    }
+    
+    return chess[end_row][end_col];
+}
+
+#if 0
+
+
+
 bool is_valid(int rows, int cols, int row, int col){
     // check bounds for row and col
     return row >= 0 && row < rows && col >= 0 && col < cols;
 }
 
-int find_minimum_number_of_moves(int rows, int cols, int start_row, 
-            int start_col,int end_row, int end_col) {
+
+
+int find_minimum_number_of_moves(int rows, int cols, int start_row, int start_col,int end_row, int end_col) {
     // initialize the chess board and mark all cells not visited
     vector<vector<int> > chess(rows, vector<int>(cols, -1));
     
@@ -41,44 +90,15 @@ int find_minimum_number_of_moves(int rows, int cols, int start_row,
     }
     return -1;
     
+    
 }
+/*
+5
+5
+0
+0
+4
+1
+*/
 
-
-int main()
-{
-    ofstream fout(getenv("OUTPUT_PATH"));
-
-    int rows;
-    cin >> rows;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    int cols;
-    cin >> cols;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    int start_row;
-    cin >> start_row;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    int start_col;
-    cin >> start_col;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    int end_row;
-    cin >> end_row;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    int end_col;
-    cin >> end_col;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    int res = find_minimum_number_of_moves(rows, cols, start_row, start_col, end_row, end_col);
-
-    fout << res << "\n";
-    cout << res << endl;
-    fout.close();
-
-    return 0;
-}
-
-
+#endif
