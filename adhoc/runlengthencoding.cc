@@ -4,6 +4,10 @@
  the add the count and string to the result. reset the count to 1. Else keep 
  incrementing the count. At the end if cnt is greater than zero then add the
  count and char to the result.
+ in compressed string cannot have number. How can we use the higher order ascii values.
+ int a = char - '0'. deompression : even number will hace cnt so keep also a count for
+ the number of bytes and if even then it contains a count of characters. So that in 
+ the next iteration to print the characte
  */
 
 
