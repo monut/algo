@@ -1,5 +1,9 @@
 /*
- * Complete the function below.
+ keep previous  index and iterate through the string. Update the pi 
+ with and the end each loop. If elem at pi doesn't match the current 
+ the add the count and string to the result. reset the count to 1. Else keep 
+ incrementing the count. At the end if cnt is greater than zero then add the
+ count and char to the result.
  */
 
 
