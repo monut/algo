@@ -82,19 +82,17 @@ int fliptree(Node* node) {
     printInorder(root);
 }
 // recursive solution
-void fliptreerecur(Node *nd, Node* &root){
-    if(!nd) return;
-    
-    fliptreerecur(nd->left, root);
-    if(root == nullptr){
-        root = nd;
-    } else {
-        nd->left->left = nd->right;
-        nd->left->right = nd;
-        nd->right = nullptr;
-        nd->left = nullptr;
-    }
-   return; 
+/*
+ * Post order trevaresal and start flipping on the way up;
+ */
+
+Node* flipTreeRecur(Node* node) {
+    if(!node) return nullptr;
+    Node *ndl = flipTreeRecur(node->left);   
+    Node *ndr = flipTreeRecur(node->right);
+    node->left = ndr;
+    node->right = ndl;
+    return node;
 }
 
 int main() {
