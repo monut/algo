@@ -1,5 +1,9 @@
-*
- * Complete the function below.
+/*
+ reverse list in groups of K. st and en point to head and move en k times.
+ Save the next poibter en and set en next ptr to null. call  reverse functin
+ to reverse the list. Set the nhead in first iteration of K as head of new list.
+ After rversing a chunk the st will point to the end of that 
+ chunk. Set it next pointer to the saved value. Also set st and en to saved next ptr.
  */
 /*
 For your reference:
@@ -9,7 +13,7 @@ LinkedListNode {
 };
 */
 
-
+#if 0
 SinglyLinkedListNode* reverserecur(SinglyLinkedListNode* head, SinglyLinkedListNode* prev){
     
     if(!prev) return head;
@@ -63,7 +67,8 @@ reverse_linked_list_in_groups_of_k(SinglyLinkedListNode* head, int k) {
     return nhead;
 }
 
-#if 0
+
+#endif
 
 void reverse_linked_list(SinglyLinkedListNode* head) {
     
@@ -118,4 +123,3 @@ reverse_linked_list_in_groups_of_k(SinglyLinkedListNode* head, int k) {
     return head;
 }
 
-#endif
