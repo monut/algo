@@ -1,4 +1,11 @@
 #include "myutils.h"
+/*
+ Find the mid node by using fast and sow pointer. split the 
+ list from mid point. recursively call mergsort on the list. 
+ Megre the two list recrusively.Merging linked list can be 
+ done withour extra space by moving pointers.  
+ */
+/*
 
 class LinkedListNode{
 public:
