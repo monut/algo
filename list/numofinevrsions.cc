@@ -1,3 +1,4 @@
+/*
 // Given an array count the number of inversions in the array
 For any index i<j if A[i] > A[j]  => inv
 Arr: 2  3 1 
@@ -17,6 +18,7 @@ Sort[0] = 4
 O(NlogN) 
 
 3 4 5 0 1 2
+*/
 
 int
 merge(vector<int>& arr,int st, int m, int en) {
