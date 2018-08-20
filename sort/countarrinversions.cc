@@ -47,7 +47,6 @@ merge(vector<int>& arr,int st, int m, int en) {
         }
         
         for(int k = st; i <= en; k++) {
-            
             arr[k] = res[k-st];
         }
         return cnt;
@@ -57,9 +56,10 @@ void
 mergesort(vector<int> arr, int st, int en, int& cnt){
       if(st >= en) return;
      int m = st + (en-st)/2;
-     //mergesort(arr, st, m);
-     // mergesort(arr, m+1, en);
      cnt += merge(arr, st, m, en);
+     mergesort(arr, st, m, cnt);
+     mergesort(arr, m+1, en, cnt);
+     
 }
 
 int main(vector<int> arr){
