@@ -21,13 +21,12 @@ O(NlogN)
 */
 
 int
-merge(vector<int>& arr,int st, int m, int en) {
-        int sz1 = m
-        int sz2 = en;
+merge(vector<int>& arr, int st, int m, int en) {
+        
         int cnt = 0;
         int i = st, j = m+1;
         vector<int> res;
-        while(i < sz1 && j < sz2){
+        while(i <= m && j <= en){
             if(arr[i] < arr[j]) {
                i++;
                 res.push_back(ar[i]);
@@ -38,10 +37,10 @@ merge(vector<int>& arr,int st, int m, int en) {
              
         }
         
-        while(i < sz1) {
+        while(i <= m) {
             res.push_back(arr[i++]);
         }
-        while(j < sz2) {
+        while(j <= en) {
             res.push_back(arr[j++]);
            
         }
