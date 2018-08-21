@@ -24,3 +24,35 @@ int deledupsort(vector<int> arr){
     }
   }
 }
+//#########buy sell stock twice
+int buyselltwice(vector<int> arr) {
+    vector<int> ltor;
+    int min_price = numeric_limits<int>::max();
+    int max_profit = 0;
+    
+    for(int i = 0; i < arr.size(); i++) {
+        int profit = arr[i] - min_price;
+        max_profit = max(max_profit, profit);
+        ltor.push_back(max_profit);
+        min_price = min(min_price, arr[i]);
+    }
+    
+    vector<int> rtol;
+    max_profit = 0;
+    int max_price = numeric_limis<int>::min();
+    for(int i = arr.size() - 1; i >= 0; i--) {
+        int profit = max_price - arr[i];
+        max_profit = max(max_profit, profit);
+        ltor.push_back(max_profit);
+        max_price = max(max_price, arr[i]);
+    }
+
+    int max_profit = rtol[0]; // hangle teh case ltor[0 - 1] + rtol[0] case;
+    
+    for(int i = 1; i < arr.size(); i++) {
+        int profit = ltor[i-1] + rtol[i];
+        max(max_profit, profit);
+    }
+    return max_profit;
+ }
+    
