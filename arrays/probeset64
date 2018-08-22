@@ -55,4 +55,26 @@ int buyselltwice(vector<int> arr) {
     }
     return max_profit;
  }
+ 
+ // apply permutation 
+ 
+void app_permutation(vector<int>& arr, vector<int>& perm) {
+    for(int i = 0; i < arr.size(); i++) {
+        if(perm[i] >= 0 ) {
+            gothtoughperm(i, arr,perm);
+        }
+    }
+}
+gothroughperm(int start; vector<int>& arr, vector<int>& perm) {
+    int i = start;
+    int temp = arr[i];
+    do {
+        int nxt_i = perm[i];
+        int ntx_temp = arr[nxt_i];
+        arr[nxt_i] = temp;
+        i = nxt_i; temp = nxt_temp;
+        
+    } while( i != start);
     
+}
+
