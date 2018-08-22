@@ -78,3 +78,14 @@ gothroughperm(int start; vector<int>& arr, vector<int>& perm) {
     
 }
 
+// Find with random probability
+// there are N! permutation and we have to choose one of them
+// we call we look for an inde in [0, i];
+void randomprob(vector<int>& sh){
+    for(int i = sh.size()-1; i >=0; i--){
+        int idx = uniform_distribution_random(i+1);
+        swap(arr[i], arr[idx]);
+    }
+}
+
+// Generate non uniform random numbers.
