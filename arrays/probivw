@@ -1,0 +1,29 @@
+//aps
+// find intersection of 2 range
+pair<int, int> intersection(vector<int> a, vector<int> b){
+ if(a.first > b.first){
+    auto tmp = a;
+    a = b; b = tmp;
+ }
+ 
+ if(a.first < b.first && a.second > b.second){
+    return b;
+ }
+ 
+ if(a.first >  b.first && a.second > b.second){
+    return b;
+ }
+ 
+ if(a.second <= b.first) {
+  return {b.first, a.second};
+ }
+ return {};
+}
+// given the end points of diagoanls of two squares find the intersection 
+vector<pair<int,int> > squareinter(vector<int> sq1, vector<int> sq2){
+    auto xcord = intersection(sq1[0], sq1[2], sq2[0], sq2[2]);
+    auto ycord = intersection(sq1[1], sq1[3], sq2[1], sq2[3]);
+    return {{xcord.first, ycord.first}, {xcord.second, ycord.second}};
+}
+
+
