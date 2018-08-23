@@ -1,13 +1,13 @@
 
 /*
- * Complete the function below.
+ * Megre sort is stable sort for duplicates.
  */
 void mymerge(vector<int>& ar, int st, int m,  int en) {
     int i = st;
     int j = m+1;
     vector<int> res;
     while(i <= m && j <= en) {
-        if(ar[i] < ar[j]){
+        if(ar[i] <= ar[j]){ // This ensures that it is stable
             res.push_back(ar[i++]);
         } else {
             res.push_back(ar[j++]);
