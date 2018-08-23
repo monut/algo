@@ -1,0 +1,7 @@
+/*
+A[0] >= A[1] and A[n-2] <= A[n-1] find local min where A[i] is less than or equal to neightbour. Similar 
+to a rotated sorted array problem.
+[4 3 2 2 8] then 2 is local min
+if(A[mid -1 ] >= A[mid] && A[mid] <= A[mid+1]
+else if ( A[mid] > A[mid-1] ) got right if A[mid] < A[mid-1] go right
+*/
