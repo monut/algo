@@ -18,41 +18,41 @@ void
 insertTrie(TNode *nd, string str){
     
     for(auto c : str){
-        if(nd->chlds.find(c) == nd-chlds.end()){
+        if(nd->chlds.find(c) == nd->chlds.end()){
             nd->chlds[c] = new TNode();
         }
-        nd = nd->clds[c];
+        nd = nd->chlds[c];
     }
     nd->isword = true;
 }
 
 TNode *bldtrie(vector<string>& vec){
     
-    TNode *root = TNode();
+    TNode *root = new TNode();
     
     for(auto str : vec){
-        insertTrie(str);
+        insertTrie(root, str);
     }
     
     return root;
 }
 void
-bfs(TNode *root, string exp,vector<int>& res, int cnt){
+bfs(TNode *root, string exp,vector<string>& res, int cnt){
     if(!root) return;
    
     if(root->isword && cnt < 0){
         res.push_back(exp);
     }
     
-    for(auto elem : root->children){
-        bfs(elem.second, exp + elem.first, cnt--);
+    for(auto elem : root->chlds){
+        bfs(elem.second, exp + elem.first,res, cnt--);
     }
 }
 
-void helper(TNode *root, string str,int pos, string exp,vector<int>& res){
-    if(!root || pos >= str,size()) return;
+void helper(TNode *root, string str,int pos, string exp,vector<string>& res){
+    if(!root || pos >= (int)str.size()) return;
     
-    char c = str.substr(pos,1);
+    char c = str[pos];
     int cnt = 0;
     if(isdigit(c)){
         cnt = c;
@@ -73,10 +73,12 @@ void helper(TNode *root, string str,int pos, string exp,vector<int>& res){
 }
 // To execute C++, please define "int main()"
 int main() {
-    vector<string> dict = {"water", "wafer", "gelatin"}
+    vector<string> dict = {"water", "wafer", "gelatin"};
     // crete Trie from dicionary
-    TNode *root = buildTrie(dict);
+    TNode *root = bldtrie(dict);
     string exp;
+    string str("wa2");
     vector<string> res;
-    helper(TNode, str, pos, exp, res)
+    helper(root, str, 0, exp, res);
 }
+
