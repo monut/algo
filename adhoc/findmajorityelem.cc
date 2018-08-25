@@ -20,13 +20,13 @@ int majelem(vector<int>& arr){
         cnt = 1;
       }
     }
-    
+    cnt = 0;
     for(auto val : arr) {
         if(val == maj)
           cnt++;
     }
     if(cnt > arr.size()/2)
-      retrun maj;
+      return maj;
     return -1;
 }
 
