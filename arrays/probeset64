@@ -89,3 +89,17 @@ void randomprob(vector<int>& sh){
 }
 
 // Generate non uniform random numbers.
+
+
+// rotate array elements 
+int main() {
+
+    vector<int> vec = {1, 2, 3, 4, 5};
+    int i = 2;
+    // rotate by 2
+    reverse(vec.begin(), vec.end());
+    reverse(vec.begin(), vec.begin() + i);
+    reverse(vec.begin() + i + 1, vec.end());
+    
+    for_each(vec.begin(), vec.end(), [](int a){cout << a << " ";});
+}
