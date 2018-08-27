@@ -2,10 +2,10 @@
 * Complete the function below.
 */
 int min(int x , int y, int z){
-return min(min(x, y), z);
+  return min(min(x, y), z);
 }
 int helper1(string st1, string st2, int n, int m){
-// if the first string exhausts we need to do
+  // if the first string exhausts we need to do
 // operation for the remaining letter in second
 // vice versa
 if(n < 0 && m < 0) return 0;
