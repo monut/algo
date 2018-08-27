@@ -99,7 +99,7 @@ int main() {
     // rotate by 2
     reverse(vec.begin(), vec.end());
     reverse(vec.begin(), vec.begin() + i);
-    reverse(vec.begin() + i + 1, vec.end());
+    reverse(vec.begin() + i, vec.end());
     
     for_each(vec.begin(), vec.end(), [](int a){cout << a << " ";});
 }
