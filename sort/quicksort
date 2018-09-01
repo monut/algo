@@ -9,10 +9,11 @@ int partition(vector<int>& arr, int lft, int rt) {
   
   }
   swap(arr[rt],arr[pi]);
-  return pi;
+  return rt;
 }
 
 void quicksort(vector<int> &arr, int lft, int rt){
+  if(lft > rt) return;
   int pi = partition(arr, lft, rt);
   quicksort(arr, lft, pi-1);
   quicksort(arr, pi+1, rt);
