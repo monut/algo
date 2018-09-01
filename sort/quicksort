@@ -1,14 +1,20 @@
 
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// To execute C++, please define "int main()"
+
+
 int partition(vector<int>& arr, int lft, int rt) {
-  int pi = choosePivot();
-  int pivot = arr[pi];
+  int pivot = arr[lft];
   while(lft < rt) {
-    while(a[lft] <= pivot) lft++;
-    while(a[rt] > pivot) rt++;
+    while(arr[lft] < pivot) lft++; // this should be less than the pivot and not equal to pivot
+    while(arr[rt] > pivot) rt--;
     if(lft < rt) swap(arr[lft], arr[rt]);
   
   }
-  swap(arr[rt],arr[pi]);
+  swap(arr[rt],arr[lft]);
   return rt;
 }
 
@@ -17,4 +23,15 @@ void quicksort(vector<int> &arr, int lft, int rt){
   int pi = partition(arr, lft, rt);
   quicksort(arr, lft, pi-1);
   quicksort(arr, pi+1, rt);
+}
+
+int main() {
+    vector<int> vec = {2,4,3,5};
+    
+    quicksort(vec, 0 , vec.size() - 1);
+        
+    for(auto v : vec){
+        cout << v << " ";
+    }
+    cout << endl;
 }
