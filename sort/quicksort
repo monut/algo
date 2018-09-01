@@ -18,7 +18,7 @@ int partition(vector<int>& arr, int lft, int rt) {
   int pi = lft;
   lft++;
   while(lft < rt) {
-    while(arr[lft] <= pivot) lft++;
+    while(arr[lft] <= pivot) lft++; // = needed for duplicate elements
     while(arr[rt] > pivot) rt--;
     if(lft < rt) swap(arr[lft], arr[rt]);
   
