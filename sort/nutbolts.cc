@@ -2,6 +2,11 @@
 #include <vector>
 #include <algorithm>
 
+/*
+quicksort. Chose value as pivot from nuts and partition bolt on that pivot. 
+The parition will retunr the pi for bolt. Now choose the bolt[pi] as pivot 
+and partition the nuts on that pivot.
+*/
 #include "myutils.h"
 // max case and min case
 using namespace std;
