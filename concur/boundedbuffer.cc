@@ -14,7 +14,7 @@
     void put(int val){
       unique_lock<mutex> lck(mtx_);
       if(bq_.size() >= cap_){
-        cv_full(lck,[this](){return bq_.size() < cap_;})
+        cv_full.wait(lck,[this](){return bq_.size() < cap_;})
       }
       bq_.push(val);
       cv_empty.notify_one();
@@ -23,7 +23,7 @@
     int get(){
         unique_lock<mutex> lck(mtx_);
         if(bq_.empty()){
-          cv_empty(lck,[this](){return !bq_.empty();})
+          cv_empty.wait(lck,[this](){return !bq_.empty();})
         }
         int val = bq_.front();
         bq_.pop();
