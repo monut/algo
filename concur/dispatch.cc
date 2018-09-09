@@ -95,3 +95,78 @@ main(){
 
     dsp.dispatchtask();
 }
+
+
+// +++++++++++++
+
+#include <iostream>
+#include <functional>
+#include <vector>
+#include <mutex>
+#include <queue>
+using namespace std;
+
+class TaskObj {
+    private:
+        int val_;
+    
+    public:
+    TaskObj(int val = 0):val_(val){};
+    void operator() (int val){
+        cout << " initial val "  << val_ << endl;
+        cout << " new val got "  << val << endl;
+    }
+};
+
+class Dispatcher {
+   queue<function<void(int)> > fq_;
+   mutex mtx_;
+   
+    public:
+    Dispatcher(){};
+    void addtask(function<void(int)> func){
+        unique_lock<mutex> lck(mtx_);
+        fq_.push(func);
+    }
+    
+    void dispatch(int val) {
+        queue<function<void(int)> > lq;
+        {
+          unique_lock<mutex> lck(mtx_);
+          lq.swap(fq_);
+        }
+        
+        while(!lq.empty()) {
+            auto func = lq.front(); lq.pop(); 
+            func(val);
+        }
+    }
+};
+
+using namespace std::placeholders;
+
+class Callback {
+    int val_;
+    public:
+    Callback(int val = 0):val_(val){};
+    void execute(int val){
+        cout << "callback initial value " << val_ << endl;
+        cout << "callback value " << val << endl;
+    }
+};
+
+void gotval(int val){ cout << "global function called " << val << endl;}
+// To execute C++, please define "int main()"
+int main() {
+    Dispatcher dis;
+    TaskObj tobj(5); 
+    dis.addtask(tobj);
+    dis.addtask(bind(gotval, _1));
+    dis.addtask(gotval);
+   
+    Callback cb(66); 
+    dis.addtask(bind(&Callback::execute, &cb, _1));
+    dis.dispatch(8);
+}
+
+
