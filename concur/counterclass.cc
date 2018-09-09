@@ -1,6 +1,12 @@
 /*
   void inc(int va);
   int get_val();
+  
+ chrono::time_point<chrono::system_clock> t = chrono::system_clock::now();
+ this_thread::sleep_for(chrono::seconds(3));  
+ auto diff = chrono::system_clock::now() - t;    
+ cout << chrono::duration_cast<chrono::seconds>(diff).count();
+}
  */
  
 #include <iostream>
