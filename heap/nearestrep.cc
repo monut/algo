@@ -4,11 +4,8 @@
 using namespace std;
 
 /*
-    sort increment decrement array
-    divide the array into subarrays and the 
-    merge these sorted arrays
-    travers left to right and split when 
-    increaing becomes decreaisng
+   store the index and compute the min dist if the same word is found agai. 
+   also update the index for the word with new index
  */
 int nearestrep(vector<string>& a){
     unordered_map<string, int> mp;
