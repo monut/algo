@@ -19,8 +19,8 @@ int main() {
        idx = str.find(" ", st);
        
     }
-    
-    reverse(str.begin() + st, str.end());
-    
+    if( idx < str.length() -1){
+        reverse(str.begin() + st, str.end());
+    }
     cout << str;
 }
