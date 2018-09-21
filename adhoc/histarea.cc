@@ -1,5 +1,32 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
 
-// C++ program to find maximum rectangular area in
+// To execute C++, please define "int main()"
+int fmax(const vector<int>& v){
+   int max_a = 0;
+   stack<int> st;
+   for(int i = 0 ; i <= v.size(); i++){
+        while(!st.empty()  && ( i == v.size() || v[st.top()] > v[i])){
+          auto h = v[st.top()]; st.pop();
+          int ar = (st.empty()?h*i : h*(i - st.top() -1)); 
+          max_a = max(max_a, ar); 
+       }
+       st.push(i); 
+   }
+   return max_a;
+}
+
+int main() {
+    vector<int> v = {2,2,7,4, 2};
+    cout << fmax(v);
+}
+
+
+
+
+
 // linear time
 #include<iostream>
 #include<stack>
@@ -73,3 +100,4 @@ int main()
     cout << "Maximum area is " << getMaxArea(hist, n);
     return 0;
 }
+
