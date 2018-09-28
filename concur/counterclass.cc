@@ -88,6 +88,12 @@ class CounterClass {
 
 void
 CounterClass::addEvents(uint64_t val) {
+    /*
+    can use atomic counter and use tes_and_set()
+    local_val = cnt_.get(); new_val = local_val + val;
+    while(!test_and_test(local_val, new_wal){local_val = cnt_.get(); new_val = local_val + val;}
+    */
+  
     // based on thread id take a bucket lock
     // aggregate the stats when ?
     int64_t t = get_time();
