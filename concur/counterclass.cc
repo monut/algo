@@ -142,3 +142,84 @@ CounterClass::getNumEvents(Type et){
 }
 
 
+// aggregation happens in get path 
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstdint>
+#include <mutex>
+#include <unordered_map>
+using namespace std;
+
+enum class SumType {
+   MNT,
+   HR,
+   DAY,
+};
+
+class CounterClass {
+    private:
+    unordered_map<uint64_t, unint64_t>  
+                        ts_to_eventcnt_map_; 
+    mutex_ mtx_; 
+    
+    
+    uint64_t getsum_mnt(){
+            uint64_t ts = get_time();
+            lock_guard<mutex> lck(mtx_);
+            if(ts_to_eventcnt_map_.find(ts-1)
+                == ts_to_eventcnt_map_.end()){
+                return 0;
+            }
+            return ts_to_eventcnt_map_[ts-1];
+    };
+    
+    uint64_t getsum_hr(){
+            uint64_t ts = get_time();
+            lock_guard<mutex> lck(mtx_);
+            auto it =  ts_to_eventcnt_map_.lower_bound(ts-60);
+            uint64_t sum = 0;
+            for(; it != ts_to_eventcnt_map_.end()){
+                sum += it->second;
+            }
+            return sum;
+    };
+    uint64_t getsum_day(){
+            uint64_t ts = get_time();
+            lock_guard<mutex> lck(mtx_);
+            auto it =  ts_to_eventcnt_map_.lower_bound(ts-1440);
+            uint64_t sum = 0;
+            for(; it != ts_to_eventcnt_map_.end()){
+                sum += it->second;
+            }
+            return sum;
+    }
+   
+    public:
+    
+    void addEvents(uint64_t num_of_events){
+        lock_guard<mutex> lck(mtx_);
+        ts_to_eventcnt_map_[ts]+= num_of_events;
+    }
+    
+    uint64_t getsum(SumType stype){
+        switch(stype){
+            case SumType::MNT:
+                return getsum_mnt();
+            case SumType::HR:
+                return getsum_hr();
+            case SumType::DAY:
+                return getsum_day();
+        }     
+        return 0;
+    }
+    
+}
+
+
+int main() {
+}
+
+
+
