@@ -28,8 +28,41 @@ static void process_file(string file_name) {
   _per_thread_fileinfo[this_thread::get_id()].emplace_back(file_name,
                                                         buf.st_ino);
 }
+static bool is_directory(const string& file_name) {
+  struct stat sb;
+  if(lstat(file_name.c_str(), &sb) == -1) {
+    cout << " Unable to stat the file" << endl;
+    return false;
+  }
+  if(S_ISDIR(sb.st_mode)) return true;
+  return false;
+}
 
 static void get_filedir_list(string file_name){
+  struct dirent *dptr;
+  DIR *dir = opendir(file_name.c_str());
+  if(dir == nullptr){
+    cout << "ERROR : unable to opendir " << file_name << endl;
+    return;
+  }
+
+  process_file(file_name);
+  while((dptr = readdir(dir)) != nullptr){
+    if (strcmp(dptr->d_name,".") && strcmp(dptr->d_name,"..")) {
+      string tmp_name = file_name + "/" + string(dptr->d_name);
+      if(is_directory(tmp_name)) {
+        dir_q->put(tmp_name);
+        cout << tmp_name <<  " Is Directory " << endl;
+      } else {
+        process_file(tmp_name);
+      }
+    }
+  }
+  closedir(dir);
+}
+
+/* support where d_type is supported by FS */
+static void get_filedir_list_ext4(string file_name){
   struct dirent *dptr;
   DIR *dir = opendir(file_name.c_str());
   if(dir == nullptr){
