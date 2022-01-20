@@ -171,4 +171,41 @@ LinkedListNode* addNumbers(LinkedListNode* l1, LinkedListNode* l2) {
     }
     return ll;
 }
+
+// Example program
+#include <iostream>
+#include <string>
+using namespace std;
+struct Node {
+    int val;    
+    Node *nxt;
+    Node(int val):val(val){};
+};
+
+Node *addNode(Node *l, int cnt) {
+    while(cnt) {
+        Node *tmp = new Node(cnt);
+        tmp->nxt = l;
+        l = tmp;
+        cnt--;
+    }
+    return l;
+}
+
+void printList(Node *l) {
+    while(l) {
+        cout << "l->val " << l->val << "\n" ;
+        l = l->nxt;
+    }
+    
+}
+
+int main()
+{
+    Node *l = nullptr;
+    l = addNode(l, 4);
+    cout << " l " << l->val;
+    printList(l);
+    cout << " l " << l->val;
+}
 #endif // include <aio.h> for list MSB is the head 21 is 2->1 for that go to the end 
